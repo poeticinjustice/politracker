@@ -10,12 +10,17 @@ const PersonSchema = new Schema({
     type: String
   },
   person: {
-    type: String
+    type: String,
+    required: true,
+    unique: true
   },
   party: {
     type: String
   },
   state: {
+    type: String
+  },
+  website: {
     type: String
   },
   link1: {
@@ -33,7 +38,7 @@ const PersonSchema = new Schema({
   image: {
     type: String
   },
-  researchPost: [
+  researchPosts: [
     {
       user: {
         type: Schema.Types.ObjectId,
