@@ -6,10 +6,10 @@ const PersonSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
-  userName: {
+  name: {
     type: String
   },
-  personName: {
+  person: {
     type: String
   },
   party: {
@@ -33,7 +33,7 @@ const PersonSchema = new Schema({
   image: {
     type: String
   },
-  research: [
+  researchPost: [
     {
       user: {
         type: Schema.Types.ObjectId,
@@ -43,7 +43,7 @@ const PersonSchema = new Schema({
         type: String,
         required: true
       },
-      userName: {
+      name: {
         type: String
       },
       link: {
