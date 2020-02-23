@@ -1,4 +1,9 @@
-import { GET_PERSON, PERSON_ERROR, GET_PERSONS } from '../actions/types';
+import {
+  GET_PERSON,
+  PERSON_ERROR,
+  ADD_PERSON,
+  GET_PERSONS
+} from '../actions/types';
 
 const initialState = {
   person: null,
@@ -21,6 +26,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         persons: payload,
+        loading: false
+      };
+    case ADD_PERSON:
+      return {
+        ...state,
+        persons: [payload, ...state.persons],
         loading: false
       };
     case PERSON_ERROR:

@@ -5,7 +5,7 @@ import Spinner from '../layout/Spinner';
 import PersonItem from './PersonItem';
 import { getPersonById } from '../../actions/person';
 
-const Person = ({ getPersonById, person: { _id, person, loading }, match }) => {
+const Person = ({ getPersonById, person: { person, loading }, match }) => {
   useEffect(() => {
     getPersonById(match.params.id);
   }, [getPersonById, match.params.id]);

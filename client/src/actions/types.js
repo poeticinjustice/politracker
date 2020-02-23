@@ -16,4 +16,5 @@ export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
 // Person
 export const GET_PERSONS = 'GET_PERSONS';
 export const GET_PERSON = 'GET_PERSON';
+export const ADD_PERSON = 'ADD_PERSON';
 export const PERSON_ERROR = 'PERSON_ERROR';

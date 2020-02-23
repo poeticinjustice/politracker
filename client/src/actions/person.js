@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 
-import { GET_PERSON, GET_PERSONS, PERSON_ERROR } from './types';
+import { GET_PERSON, GET_PERSONS, ADD_PERSON, PERSON_ERROR } from './types';
 
 // Get all persons
 export const getPersons = () => async dispatch => {
@@ -37,38 +37,24 @@ export const getPersonById = id => async dispatch => {
   }
 };
 
-// Add or update person
-export const addPerson = (
-  formData,
-  history,
-  edit = false
-) => async dispatch => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
+// Add person
+export const addPerson = formData => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
 
+  try {
     const res = await axios.post('/api/persons', formData, config);
 
     dispatch({
-      type: GET_PERSON,
+      type: ADD_PERSON,
       payload: res.data
     });
 
-    dispatch(setAlert(edit ? 'Person Updated' : 'Person Added', 'success'));
-
-    if (!edit) {
-      history.push('/dashboard');
-    }
+    dispatch(setAlert('Person Added', 'success'));
   } catch (err) {
-    const errors = err.response.data.errors;
-
-    if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-    }
-
     dispatch({
       type: PERSON_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }

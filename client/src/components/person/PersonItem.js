@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const PersonItem = ({ person: { _id, person, party, state } }) => {
+const PersonItem = ({ person: { person, party, state } }) => {
   return (
     <div className='profile bg-light'>
       <div>

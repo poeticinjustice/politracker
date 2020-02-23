@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import PersonsItem from './PersonsItem';
+import PersonForm from '../person-forms/AddPerson';
 import { getPersons } from '../../actions/person';
 
 const Persons = ({ getPersons, person: { persons, loading } }) => {
@@ -20,6 +21,8 @@ const Persons = ({ getPersons, person: { persons, loading } }) => {
           <p className='lead'>
             <i className='fab fa-connectdevelop' /> Who's accountable to you?
           </p>
+          <PersonForm />
+
           <div className='profiles'>
             {persons.length > 0 ? (
               persons.map(person => (
