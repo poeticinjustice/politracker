@@ -13,3 +13,7 @@ export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
+// Person
+export const GET_PERSONS = 'GET_PERSONS';
+export const GET_PERSON = 'GET_PERSON';
+export const PERSON_ERROR = 'PERSON_ERROR';
