@@ -19,15 +19,15 @@ const PersonForm = ({ addPerson }) => {
           setText('');
         }}
       >
-        <textarea
-          name='person'
-          cols='30'
-          rows='2'
-          placeholder='Add a person'
-          value={person}
-          onChange={e => setText(e.target.value)}
-          required
-        />
+        <div className='form-group'>
+          <input
+            type='text'
+            placeholder='Add a person'
+            name='person'
+            value={person}
+            onChange={e => setText(e.target.value)}
+          />
+        </div>
         <input type='submit' className='btn btn-dark my-1' value='Submit' />
       </form>
     </div>

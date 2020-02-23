@@ -53,7 +53,7 @@ export const addPerson = formData => async dispatch => {
       payload: res.data
     });
 
-    dispatch(setAlert('Person Added', 'success'));
+    dispatch(setAlert('Person added', 'success'));
   } catch (err) {
     dispatch({
       type: PERSON_ERROR,

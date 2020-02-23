@@ -8,6 +8,7 @@ import CreateProfile from '../profile-forms/CreateProfile';
 import EditProfile from '../profile-forms/EditProfile';
 import Profiles from '../profiles/Profiles';
 import Profile from '../profile/Profile';
+import AddPerson from '../person-forms/AddPerson';
 import Persons from '../persons/Persons';
 import Person from '../person/Person';
 import NotFound from '../layout/NotFound';
@@ -27,6 +28,7 @@ const Routes = () => {
         <PrivateRoute exact path='/dashboard' component={Dashboard} />
         <PrivateRoute exact path='/create-profile' component={CreateProfile} />
         <PrivateRoute exact path='/edit-profile' component={EditProfile} />
+        <PrivateRoute exact path='/add-person' component={AddPerson} />
         <Route component={NotFound} />
       </Switch>
     </section>
