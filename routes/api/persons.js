@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const normalize = require('normalize-url');
 
 const Person = require('../../models/Person');
-const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 
 // @route    POST api/persons
-// @desc     Create a person
+// @desc     Add a person
 // @access   Private
 router.post(
   '/',

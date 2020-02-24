@@ -1,29 +1,57 @@
-import React, { useState, Fragment } from 'react';
-import { Link, withRouter, Redirect } from 'react-router-dom';
+import React, { Fragment, useState, useEffect } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addPerson } from '../../actions/person';
+import { updatePerson, getPersonById } from '../../actions/person';
 
-const AddPerson = ({ addPerson, person: { person, loading }, history }) => {
-  const [formData, setFormData] = useState({
-    link1: '',
-    link2: ''
-  });
+const initialState = {
+  person: '',
+  party: '',
+  state: '',
+  website: '',
+  link1: '',
+  link2: '',
+  link3: '',
+  link4: ''
+};
+
+const EditPerson = ({
+  person: { person, loading },
+  updatePerson,
+  getPersonById,
+  history
+}) => {
+  const [formData, setFormData] = useState(initialState);
+
+  useEffect(() => {
+    if (!person) getPersonById();
+    if (!loading) {
+      const personData = { ...initialState };
+      for (const key in person) {
+        if (key in personData) personData[key] = person[key];
+      }
+      setFormData(personData);
+    }
+  }, [loading, getPersonById, person]);
+
   const { party, state, website, link1, link2, link3, link4 } = formData;
+
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
   const onSubmit = e => {
     e.preventDefault();
-    addPerson(formData, history);
+    updatePerson(formData, history, true);
   };
 
-  return loading && person === null ? (
-    <Redirect to='/persons' />
-  ) : (
+  return (
     <Fragment>
-      <h1 className='large text-primary'>Add person</h1>
-
+      <h1 className='large text-primary'>Edit Person</h1>
+      <p className='lead'>
+        <i className='fas fa-user' /> Make some updates
+      </p>
       <small>* = required field</small>
+
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
           <input
@@ -32,9 +60,7 @@ const AddPerson = ({ addPerson, person: { person, loading }, history }) => {
             name='person'
             value={person}
             onChange={e => onChange(e)}
-            required='true'
           />
-          <small className='form-text'>*Add person's name</small>
         </div>
 
         <div className='form-group'>
@@ -116,11 +142,16 @@ const AddPerson = ({ addPerson, person: { person, loading }, history }) => {
   );
 };
 
-addPerson.propTypes = {
-  addPerson: PropTypes.func.isRequired,
+EditPerson.propTypes = {
+  updatePerson: PropTypes.func.isRequired,
+  getPersonById: PropTypes.func.isRequired,
   person: PropTypes.object.isRequired
 };
+
 const mapStateToProps = state => ({
   person: state.person
 });
-export default connect(mapStateToProps, { addPerson })(withRouter(AddPerson));
+
+export default connect(mapStateToProps, { updatePerson, getPersonById })(
+  withRouter(EditPerson)
+);

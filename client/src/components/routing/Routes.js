@@ -9,6 +9,7 @@ import EditProfile from '../profile-forms/EditProfile';
 import Profiles from '../profiles/Profiles';
 import Profile from '../profile/Profile';
 import AddPerson from '../person-forms/AddPerson';
+import EditPerson from '../person-forms/EditPerson';
 import Persons from '../persons/Persons';
 import Person from '../person/Person';
 import NotFound from '../layout/NotFound';
@@ -29,6 +30,7 @@ const Routes = () => {
         <PrivateRoute exact path='/create-profile' component={CreateProfile} />
         <PrivateRoute exact path='/edit-profile' component={EditProfile} />
         <PrivateRoute exact path='/add-person' component={AddPerson} />
+        <PrivateRoute exact path='/edit-person' component={EditPerson} />
         <Route component={NotFound} />
       </Switch>
     </section>

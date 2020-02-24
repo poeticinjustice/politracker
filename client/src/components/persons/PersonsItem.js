@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 const PersonsItem = ({ person: { _id, person, party, state } }) => {
   return (
     <div className='profile bg-light'>
+      <img src='#!' alt='' className='round-img' />
       <div>
         <p>
           <Link to={`/persons/${_id}`}>{person}</Link>
