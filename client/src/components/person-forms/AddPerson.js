@@ -9,7 +9,16 @@ const AddPerson = ({ addPerson, person: { person, loading }, history }) => {
     link1: '',
     link2: ''
   });
-  const { party, state, website, link1, link2, link3, link4 } = formData;
+  const {
+    personName,
+    party,
+    state,
+    website,
+    link1,
+    link2,
+    link3,
+    link4
+  } = formData;
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = e => {
@@ -29,8 +38,8 @@ const AddPerson = ({ addPerson, person: { person, loading }, history }) => {
           <input
             type='text'
             placeholder='Name of person'
-            name='person'
-            value={person}
+            name='personName'
+            value={personName}
             onChange={e => onChange(e)}
             required='true'
           />

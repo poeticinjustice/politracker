@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
-const normalize = require('normalize-url');
 
 const Person = require('../../models/Person');
 const User = require('../../models/User');
@@ -15,7 +14,7 @@ router.post(
   [
     auth,
     [
-      check('person', 'Name of person is required')
+      check('personName', 'Name of person is required')
         .not()
         .isEmpty()
     ]
@@ -30,17 +29,17 @@ router.post(
       const user = await User.findById(req.user.id).select('-password');
 
       let duplicate = await Person.findOne({
-        person: req.body.person
+        personName: req.body.personName
       });
 
       if (duplicate) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'Person already exists' }] });
+          .json({ errors: [{ msg: 'Person with that name already exists' }] });
       }
 
       const newPerson = new Person({
-        person: req.body.person,
+        personName: req.body.personName,
         party: req.body.party,
         state: req.body.state,
         website: req.body.website,
@@ -53,6 +52,66 @@ router.post(
       });
 
       const person = await newPerson.save();
+
+      res.json(person);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+// @route     PUT api/persons/:id
+// @desc      Update person
+// @access    Private
+router.put(
+  '/:id',
+  [
+    auth,
+    [
+      check('personName', 'Name of person is required')
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const {
+      personName,
+      party,
+      state,
+      website,
+      link1,
+      link2,
+      link3,
+      link4
+    } = req.body;
+
+    // Build person object
+    const personFields = {};
+    if (personName) personFields.personName = personName;
+    if (party) personFields.party = party;
+    if (state) personFields.state = state;
+    if (website) personFields.website = website;
+    if (link1) personFields.link1 = link1;
+    if (link2) personFields.link2 = link2;
+    if (link3) personFields.link3 = link3;
+    if (link4) personFields.link4 = link4;
+
+    try {
+      let person = await Person.findById(req.params.id);
+
+      if (!person) return res.status(404).json({ msg: 'Person not found' });
+
+      // Make sure user created person
+      if (person.user.toString() !== req.user.id) {
+        return res.status(401).json({ msg: 'Not authorized' });
+      }
+
+      person = await Person.findByIdAndUpdate(
+        req.params.id,
+        { $set: personFields },
+        { new: true }
+      );
 
       res.json(person);
     } catch (err) {

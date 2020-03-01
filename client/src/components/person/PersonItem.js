@@ -10,7 +10,7 @@ const PersonItem = ({
   person: {
     _id,
     user,
-    person,
+    personName,
     party,
     state,
     website,
@@ -28,7 +28,7 @@ const PersonItem = ({
       <div className='profile bg-light'>
         <img src='#!' alt='' className='round-img' />
         <div>
-          <p>{person}</p>
+          <p>{personName}</p>
           <p>{party}</p>
           <p>{state}</p>
           <p>
@@ -50,14 +50,20 @@ const PersonItem = ({
           </li>
         </ul>
       </div>
+
       {!auth.loading && user === auth.user._id && (
-        <button
-          onClick={() => deletePerson(_id)}
-          type='button'
-          className='btn btn-danger'
-        >
-          <i className='fas fa-times' />
-        </button>
+        <Fragment>
+          <Link to='/edit-person' className='btn btn-dark'>
+            Edit Person
+          </Link>
+          <button
+            onClick={() => deletePerson(_id)}
+            type='button'
+            className='btn btn-danger'
+          >
+            <i className='fas fa-times' />
+          </button>{' '}
+        </Fragment>
       )}
     </Fragment>
   );
@@ -66,7 +72,7 @@ const PersonItem = ({
 PersonItem.propTypes = {
   person: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  deletePost: PropTypes.func.isRequired
+  deletePerson: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

@@ -78,7 +78,7 @@ export const updatePerson = (id, formData) => async dispatch => {
   };
 
   try {
-    const res = await axios.post(`/api/persons/${id}`, formData, config);
+    const res = await axios.put(`/api/persons/${id}`, formData, config);
 
     dispatch({
       type: UPDATE_PERSON,

@@ -2,6 +2,7 @@ import {
   GET_PERSON,
   PERSON_ERROR,
   ADD_PERSON,
+  UPDATE_PERSON,
   GET_PERSONS
 } from '../actions/types';
 
@@ -29,6 +30,12 @@ export default function(state = initialState, action) {
         loading: false
       };
     case ADD_PERSON:
+      return {
+        ...state,
+        persons: [payload, ...state.persons],
+        loading: false
+      };
+    case UPDATE_PERSON:
       return {
         ...state,
         persons: [payload, ...state.persons],

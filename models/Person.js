@@ -9,7 +9,7 @@ const PersonSchema = new Schema({
   name: {
     type: String
   },
-  person: {
+  personName: {
     type: String,
     required: true,
     unique: true

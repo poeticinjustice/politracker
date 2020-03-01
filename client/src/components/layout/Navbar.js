@@ -42,7 +42,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   return (
     <nav className='navbar bg-dark'>
       <h1>
-        <Link to='/'>
+        <Link to='/persons'>
           <i className='fas' /> Poli Tracker
         </Link>
       </h1>

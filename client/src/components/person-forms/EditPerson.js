@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { updatePerson, getPersonById } from '../../actions/person';
 
 const initialState = {
-  person: '',
+  personName: '',
   party: '',
   state: '',
   website: '',
@@ -34,7 +34,16 @@ const EditPerson = ({
     }
   }, [loading, getPersonById, person]);
 
-  const { party, state, website, link1, link2, link3, link4 } = formData;
+  const {
+    personName,
+    party,
+    state,
+    website,
+    link1,
+    link2,
+    link3,
+    link4
+  } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -51,14 +60,13 @@ const EditPerson = ({
         <i className='fas fa-user' /> Make some updates
       </p>
       <small>* = required field</small>
-
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
           <input
             type='text'
             placeholder='Name of person'
-            name='person'
-            value={person}
+            name='personName'
+            value={personName}
             onChange={e => onChange(e)}
           />
         </div>
@@ -134,7 +142,7 @@ const EditPerson = ({
         </div>
 
         <input type='submit' className='btn btn-primary my-1' />
-        <Link className='btn btn-light my-1' to='/persons'>
+        <Link className='btn btn-light my-1' to='/persons/'>
           Go Back
         </Link>
       </form>
