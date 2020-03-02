@@ -51,7 +51,7 @@ const PersonItem = ({
         </ul>
       </div>
 
-      {!auth.loading && user === auth.user._id && (
+      {auth.isAuthenticated && !auth.loading && user === auth.user._id && (
         <Fragment>
           <Link to='/edit-person' className='btn btn-dark'>
             Edit Person
