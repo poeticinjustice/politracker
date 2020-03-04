@@ -50,7 +50,7 @@ const EditPerson = ({
 
   const onSubmit = e => {
     e.preventDefault();
-    updatePerson(formData, history, true);
+    updatePerson(person._id, formData, history, true);
   };
 
   return (
