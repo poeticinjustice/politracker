@@ -1,4 +1,6 @@
 const express = require('express');
+const request = require('request');
+const config = require('config');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
@@ -261,6 +263,36 @@ router.delete('/researchpost/:id/:researchpost_id', auth, async (req, res) => {
     await person.save();
 
     res.json(person.researchPosts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route    GET api/persons/propublica/:memberid
+// @desc     Get person data from Pro Publica
+// @access   Public
+router.get('/propublica/:memberid', (req, res) => {
+  try {
+    const options = {
+      uri: encodeURI(
+        `https://api.propublica.org/congress/v1/members/${req.params.memberid}.json`
+      ),
+      method: 'GET',
+      headers: {
+        'x-api-key': `${config.get('proPublicaToken')}`
+      }
+    };
+
+    request(options, (error, response, body) => {
+      if (error) console.error(error);
+
+      if (response.statusCode !== 200) {
+        return res.status(404).json({ msg: 'No Pro Publica member found' });
+      }
+
+      res.json(JSON.parse(body));
+    });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
