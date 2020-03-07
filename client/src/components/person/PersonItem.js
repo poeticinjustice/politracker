@@ -52,7 +52,7 @@ const PersonItem = ({
       </div>
 
       {auth.isAuthenticated && !auth.loading && user === auth.user._id && (
-        <Fragment>
+        <div>
           <Link to='/edit-person' className='btn btn-dark'>
             Edit Person
           </Link>
@@ -62,8 +62,8 @@ const PersonItem = ({
             className='btn btn-danger'
           >
             <i className='fas fa-times' />
-          </button>{' '}
-        </Fragment>
+          </button>
+        </div>
       )}
     </Fragment>
   );

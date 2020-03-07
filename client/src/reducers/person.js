@@ -1,9 +1,12 @@
 import {
+  GET_PERSONS,
   GET_PERSON,
-  PERSON_ERROR,
   ADD_PERSON,
   UPDATE_PERSON,
-  GET_PERSONS
+  DELETE_PERSON,
+  PERSON_ERROR,
+  ADD_RESEARCHPOST,
+  DELETE_RESEARCHPOST
 } from '../actions/types';
 
 const initialState = {
@@ -41,12 +44,35 @@ export default function(state = initialState, action) {
         persons: [payload, ...state.persons],
         loading: false
       };
+    case DELETE_PERSON:
+      return {
+        ...state,
+        persons: state.persons.filter(person => person._id !== payload),
+        loading: false
+      };
     case PERSON_ERROR:
       return {
         ...state,
         error: payload,
         loading: false,
         person: null
+      };
+    case ADD_RESEARCHPOST:
+      return {
+        ...state,
+        person: { ...state.person, researchPost: payload },
+        loading: false
+      };
+    case DELETE_RESEARCHPOST:
+      return {
+        ...state,
+        person: {
+          ...state.person,
+          researchPosts: state.person.researchPosts.filter(
+            researchPost => researchPost._id !== payload
+          )
+        },
+        loading: false
       };
     default:
       return state;

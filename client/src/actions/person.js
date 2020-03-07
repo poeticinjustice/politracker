@@ -7,7 +7,9 @@ import {
   ADD_PERSON,
   UPDATE_PERSON,
   PERSON_ERROR,
-  DELETE_PERSON
+  DELETE_PERSON,
+  ADD_RESEARCHPOST,
+  DELETE_RESEARCHPOST
 } from './types';
 
 // Get all persons
@@ -105,6 +107,59 @@ export const deletePerson = id => async dispatch => {
     });
 
     dispatch(setAlert('Person Removed', 'success'));
+  } catch (err) {
+    dispatch({
+      type: PERSON_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Post research
+export const addResearchPost = (personId, formData) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  try {
+    const res = await axios.post(
+      `/api/persons/researchpost/${personId}`,
+      formData,
+      config
+    );
+
+    dispatch({
+      type: ADD_RESEARCHPOST,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Research Posted', 'success'));
+  } catch (err) {
+    dispatch({
+      type: PERSON_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Delete research
+export const deleteResearchPost = (
+  personId,
+  researchPostId
+) => async dispatch => {
+  try {
+    await axios.delete(
+      `/api/persons/researchpost/${personId}/${researchPostId}`
+    );
+
+    dispatch({
+      type: DELETE_RESEARCHPOST,
+      payload: researchPostId
+    });
+
+    dispatch(setAlert('Research Removed', 'success'));
   } catch (err) {
     dispatch({
       type: PERSON_ERROR,

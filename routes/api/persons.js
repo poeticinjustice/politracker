@@ -51,6 +51,8 @@ router.post(
         user: req.user.id
       });
 
+      newPerson.website === '' ? '' : normalize(website, { forceHttps: true });
+
       const person = await newPerson.save();
 
       res.json(person);

@@ -5,10 +5,7 @@ import { connect } from 'react-redux';
 import { addPerson } from '../../actions/person';
 
 const AddPerson = ({ addPerson, person: { person, loading }, history }) => {
-  const [formData, setFormData] = useState({
-    link1: '',
-    link2: ''
-  });
+  const [formData, setFormData] = useState({});
   const {
     personName,
     party,
