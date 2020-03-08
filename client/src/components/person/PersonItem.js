@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deletePerson } from '../../actions/person';
 
@@ -22,9 +21,6 @@ const PersonItem = ({
 }) => {
   return (
     <Fragment>
-      <Link to='/persons' className='btn btn-light'>
-        Back To People
-      </Link>
       <div className='profile bg-light'>
         <img src='#!' alt='' className='round-img' />
         <div>
@@ -51,9 +47,6 @@ const PersonItem = ({
         </ul>
         {auth.isAuthenticated && !auth.loading && user === auth.user._id && (
           <div>
-            <Link to='/edit-person' className='btn btn-dark'>
-              Edit Person
-            </Link>
             <button
               onClick={() => deletePerson(_id)}
               type='button'

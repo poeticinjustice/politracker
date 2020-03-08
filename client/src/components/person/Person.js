@@ -1,17 +1,19 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import PersonItem from './PersonItem';
 import ResearchPostForm from './ResearchPostForm';
 import ResearchPostItem from './ResearchPostItem';
 import PersonProPub from './PersonProPub';
-import { getPersonById } from '../../actions/person';
+import { getPersonById, deletePerson } from '../../actions/person';
 
 const Person = ({
   getPersonById,
-  person: { person, loading },
+  person: { person, loading, user, _id },
   auth,
+  deletePerson,
   match
 }) => {
   useEffect(() => {
@@ -24,6 +26,27 @@ const Person = ({
         <Spinner />
       ) : (
         <Fragment>
+          {auth.isAuthenticated && !auth.loading ? (
+            <div>
+              <Link to='/persons' className='btn btn-light'>
+                Back To People
+              </Link>
+              <Link to='/edit-person' className='btn btn-dark'>
+                Edit Person
+              </Link>
+              <button
+                onClick={() => deletePerson(_id)}
+                type='button'
+                className='btn btn-danger'
+              >
+                <i className='fas fa-times' />
+              </button>
+            </div>
+          ) : (
+            <Link to='/persons' className='btn btn-light'>
+              Back To People
+            </Link>
+          )}
           <div className='profiles'>
             <PersonItem person={person} />
           </div>
@@ -57,7 +80,8 @@ const Person = ({
 Person.propTypes = {
   getPersonById: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  person: PropTypes.object.isRequired
+  person: PropTypes.object.isRequired,
+  deletePerson: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -65,4 +89,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getPersonById })(Person);
+export default connect(mapStateToProps, { getPersonById, deletePerson })(
+  Person
+);
