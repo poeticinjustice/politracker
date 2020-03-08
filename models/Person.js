@@ -38,6 +38,9 @@ const PersonSchema = new Schema({
   image: {
     type: String
   },
+  propubmemberid: {
+    type: String
+  },
   researchPosts: [
     {
       user: {

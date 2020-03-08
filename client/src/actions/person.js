@@ -9,7 +9,8 @@ import {
   PERSON_ERROR,
   DELETE_PERSON,
   ADD_RESEARCHPOST,
-  DELETE_RESEARCHPOST
+  DELETE_RESEARCHPOST,
+  GET_PROPUBDATA
 } from './types';
 
 // Get all persons
@@ -164,6 +165,26 @@ export const deleteResearchPost = (
     dispatch({
       type: PERSON_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Get Pro Publica data
+export const getProPubData = memberid => async dispatch => {
+  try {
+    const res = await axios.get(`/api/persons/propublica/${memberid}`);
+
+    dispatch({
+      type: GET_PROPUBDATA,
+      payload: res.data.results[0]
+    });
+  } catch (err) {
+    dispatch({
+      type: PERSON_ERROR,
+      payload: {
+        msg: err.response.statusText,
+        status: err.response.status
+      }
     });
   }
 };

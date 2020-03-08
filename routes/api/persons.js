@@ -49,11 +49,10 @@ router.post(
         link2: req.body.link2,
         link3: req.body.link3,
         link4: req.body.link4,
+        propubmemberid: req.body.propubmemberid,
         name: user.name,
         user: req.user.id
       });
-
-      newPerson.website === '' ? '' : normalize(website, { forceHttps: true });
 
       const person = await newPerson.save();
 
@@ -87,7 +86,8 @@ router.put(
       link1,
       link2,
       link3,
-      link4
+      link4,
+      propubmemberid
     } = req.body;
 
     // Build person object
@@ -100,6 +100,7 @@ router.put(
     if (link2) personFields.link2 = link2;
     if (link3) personFields.link3 = link3;
     if (link4) personFields.link4 = link4;
+    if (propubmemberid) personFields.propubmemberid = propubmemberid;
 
     try {
       let person = await Person.findById(req.params.id);
@@ -238,7 +239,6 @@ router.delete('/researchpost/:id/:researchpost_id', auth, async (req, res) => {
     const person = await Person.findById(req.params.id);
 
     // Pull out research post
-    // ERROR: Why is it deleting oldest post rather than post by id??
     const researchPost = person.researchPosts.find(
       researchPost => researchPost.id === req.params.researchpost_id
     );

@@ -5,39 +5,51 @@ import Spinner from '../layout/Spinner';
 import PersonItem from './PersonItem';
 import ResearchPostForm from './ResearchPostForm';
 import ResearchPostItem from './ResearchPostItem';
+import PersonProPub from './PersonProPub';
 import { getPersonById } from '../../actions/person';
 
 const Person = ({
-  auth,
   getPersonById,
   person: { person, loading },
+  auth,
   match
 }) => {
   useEffect(() => {
     getPersonById(match.params.id);
   }, [getPersonById, match.params.id]);
 
-  return loading || person === null ? (
-    <Spinner />
-  ) : (
+  return (
     <Fragment>
-      <div className='profiles'>
-        <PersonItem person={person} />
-      </div>
-      <div>
-        <div className='bg-white p-1 my-1'>
-          {auth.isAuthenticated && <ResearchPostForm personId={person._id} />}
-          <div className='comments'>
-            {person.researchPosts.map(researchPost => (
-              <ResearchPostItem
-                key={researchPost._id}
-                researchPost={researchPost}
-                personId={person._id}
-              />
-            ))}
+      {person === null || loading ? (
+        <Spinner />
+      ) : (
+        <Fragment>
+          <div className='profiles'>
+            <PersonItem person={person} />
           </div>
-        </div>
-      </div>
+          <div>
+            {person.propubmemberid && (
+              <PersonProPub memberid={person.propubmemberid} />
+            )}
+          </div>
+          <div>
+            <div className='bg-white p-1 my-1'>
+              {auth.isAuthenticated && (
+                <ResearchPostForm personId={person._id} />
+              )}
+              <div className='comments'>
+                {person.researchPosts.map(researchPost => (
+                  <ResearchPostItem
+                    key={researchPost._id}
+                    researchPost={researchPost}
+                    personId={person._id}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </Fragment>
+      )}
     </Fragment>
   );
 };

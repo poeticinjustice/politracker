@@ -14,8 +14,10 @@ const AddPerson = ({ addPerson, person: { person, loading }, history }) => {
     link1,
     link2,
     link3,
-    link4
+    link4,
+    propubmemberid
   } = formData;
+
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = e => {
@@ -109,6 +111,16 @@ const AddPerson = ({ addPerson, person: { person, loading }, history }) => {
             placeholder='Link'
             name='link4'
             value={link4}
+            onChange={e => onChange(e)}
+          />
+        </div>
+
+        <div className='form-group'>
+          <input
+            type='text'
+            placeholder='propubmemberid'
+            name='propubmemberid'
+            value={propubmemberid}
             onChange={e => onChange(e)}
           />
         </div>

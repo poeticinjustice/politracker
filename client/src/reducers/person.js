@@ -6,12 +6,14 @@ import {
   DELETE_PERSON,
   PERSON_ERROR,
   ADD_RESEARCHPOST,
-  DELETE_RESEARCHPOST
+  DELETE_RESEARCHPOST,
+  GET_PROPUBDATA
 } from '../actions/types';
 
 const initialState = {
   person: null,
   persons: [],
+  proPubData: {},
   loading: true,
   error: {}
 };
@@ -72,6 +74,12 @@ export default function(state = initialState, action) {
             researchPost => researchPost._id !== payload
           )
         },
+        loading: false
+      };
+    case GET_PROPUBDATA:
+      return {
+        ...state,
+        proPubData: payload,
         loading: false
       };
     default:

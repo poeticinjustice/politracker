@@ -49,22 +49,21 @@ const PersonItem = ({
             <a href={link4}>{link4}</a>
           </li>
         </ul>
+        {auth.isAuthenticated && !auth.loading && user === auth.user._id && (
+          <div>
+            <Link to='/edit-person' className='btn btn-dark'>
+              Edit Person
+            </Link>
+            <button
+              onClick={() => deletePerson(_id)}
+              type='button'
+              className='btn btn-danger'
+            >
+              <i className='fas fa-times' />
+            </button>
+          </div>
+        )}
       </div>
-
-      {auth.isAuthenticated && !auth.loading && user === auth.user._id && (
-        <div>
-          <Link to='/edit-person' className='btn btn-dark'>
-            Edit Person
-          </Link>
-          <button
-            onClick={() => deletePerson(_id)}
-            type='button'
-            className='btn btn-danger'
-          >
-            <i className='fas fa-times' />
-          </button>
-        </div>
-      )}
     </Fragment>
   );
 };
