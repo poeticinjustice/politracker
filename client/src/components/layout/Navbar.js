@@ -43,7 +43,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
     <nav className='navbar bg-dark'>
       <h1>
         <Link to='/persons'>
-          <i className='fas' /> Poli Tracker
+          <i className='fas' /> Poli Tracker Test
         </Link>
       </h1>
       {!loading && (
