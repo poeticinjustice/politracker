@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import PersonItem from './PersonItem';
+import PersonButtons from './PersonButtons';
 import ResearchPostForm from './ResearchPostForm';
 import ResearchPostItem from './ResearchPostItem';
 import PersonProPub from './PersonProPub';
-import { getPersonById, deletePerson } from '../../actions/person';
+import { getPersonById } from '../../actions/person';
 
 const Person = ({
   getPersonById,
-  person: { person, loading, user, _id },
+  person: { person, loading },
   auth,
-  deletePerson,
-  match
+  match,
 }) => {
   useEffect(() => {
     getPersonById(match.params.id);
@@ -26,49 +26,32 @@ const Person = ({
         <Spinner />
       ) : (
         <Fragment>
-          {auth.isAuthenticated && !auth.loading ? (
-            <div>
-              <Link to='/persons' className='btn btn-light'>
-                Back To People
-              </Link>
-              <Link to='/edit-person' className='btn btn-dark'>
-                Edit Person
-              </Link>
-              <button
-                onClick={() => deletePerson(_id)}
-                type='button'
-                className='btn btn-danger'
-              >
-                <i className='fas fa-times' />
-              </button>
-            </div>
-          ) : (
-            <Link to='/persons' className='btn btn-light'>
-              Back To People
-            </Link>
+          <Link to='/persons' className='btn btn-light'>
+            Back To People
+          </Link>
+
+          {auth.isAuthenticated && !auth.loading && (
+            <Fragment>
+              <PersonButtons person={person} />
+            </Fragment>
           )}
-          <div className='profiles'>
-            <PersonItem person={person} />
-          </div>
-          <div>
-            {person.propubmemberid && (
-              <PersonProPub memberid={person.propubmemberid} />
-            )}
-          </div>
-          <div>
-            <div className='bg-white p-1 my-1'>
-              {auth.isAuthenticated && (
-                <ResearchPostForm personId={person._id} />
-              )}
-              <div className='comments'>
-                {person.researchPosts.map(researchPost => (
-                  <ResearchPostItem
-                    key={researchPost._id}
-                    researchPost={researchPost}
-                    personId={person._id}
-                  />
-                ))}
-              </div>
+
+          {person.propubmemberid && (
+            <PersonProPub memberid={person.propubmemberid} />
+          )}
+
+          <PersonItem person={person} />
+
+          <div className='bg-white p-1 my-1'>
+            {auth.isAuthenticated && <ResearchPostForm personId={person._id} />}
+            <div className='comments'>
+              {person.researchPosts.map((researchPost) => (
+                <ResearchPostItem
+                  key={researchPost._id}
+                  researchPost={researchPost}
+                  personId={person._id}
+                />
+              ))}
             </div>
           </div>
         </Fragment>
@@ -81,14 +64,11 @@ Person.propTypes = {
   getPersonById: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   person: PropTypes.object.isRequired,
-  deletePerson: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   person: state.person,
-  auth: state.auth
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getPersonById, deletePerson })(
-  Person
-);
+export default connect(mapStateToProps, { getPersonById })(Person);

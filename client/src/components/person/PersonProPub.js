@@ -69,11 +69,11 @@ const PersonProPub = ({ memberid, getProPubData, proPubData }) => {
 PersonProPub.propTypes = {
   getProPubData: PropTypes.func.isRequired,
   proPubData: PropTypes.object.isRequired,
-  memberid: PropTypes.string.isRequired
+  memberid: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => ({
-  proPubData: state.person.proPubData
+const mapStateToProps = (state) => ({
+  proPubData: state.person.proPubData,
 });
 
 export default connect(mapStateToProps, { getProPubData })(PersonProPub);

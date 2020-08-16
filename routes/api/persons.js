@@ -13,14 +13,7 @@ const User = require('../../models/User');
 // @access   Private
 router.post(
   '/',
-  [
-    auth,
-    [
-      check('personName', 'Name of person is required')
-        .not()
-        .isEmpty()
-    ]
-  ],
+  [auth, [check('personName', 'Name of person is required').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -31,7 +24,7 @@ router.post(
       const user = await User.findById(req.user.id).select('-password');
 
       let duplicate = await Person.findOne({
-        personName: req.body.personName
+        personName: req.body.personName,
       });
 
       if (duplicate) {
@@ -51,7 +44,7 @@ router.post(
         link4: req.body.link4,
         propubmemberid: req.body.propubmemberid,
         name: user.name,
-        user: req.user.id
+        user: req.user.id,
       });
 
       const person = await newPerson.save();
@@ -69,14 +62,7 @@ router.post(
 // @access    Private
 router.put(
   '/:id',
-  [
-    auth,
-    [
-      check('personName', 'Name of person is required')
-        .not()
-        .isEmpty()
-    ]
-  ],
+  [auth, [check('personName', 'Name of person is required').not().isEmpty()]],
   async (req, res) => {
     const {
       personName,
@@ -87,7 +73,7 @@ router.put(
       link2,
       link3,
       link4,
-      propubmemberid
+      propubmemberid,
     } = req.body;
 
     // Build person object
@@ -154,7 +140,7 @@ router.get('/:id', async (req, res) => {
   } catch (err) {
     console.error(err.message);
     if (err.kind === 'ObjectId') {
-      return res.status(404).json({ msg: 'Post not found' });
+      return res.status(404).json({ msg: 'Person not found' });
     }
     res.status(500).send('Server Error');
   }
@@ -193,14 +179,7 @@ router.delete('/:id', auth, async (req, res) => {
 // @access   Private
 router.post(
   '/researchpost/:id',
-  [
-    auth,
-    [
-      check('text', 'Text is required')
-        .not()
-        .isEmpty()
-    ]
-  ],
+  [auth, [check('text', 'Text is required').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -216,7 +195,7 @@ router.post(
         link: req.body.link,
         note: req.body.note,
         name: user.name,
-        user: req.user.id
+        user: req.user.id,
       };
 
       person.researchPosts.unshift(newResearchPost);
@@ -240,7 +219,7 @@ router.delete('/researchpost/:id/:researchpost_id', auth, async (req, res) => {
 
     // Pull out research post
     const researchPost = person.researchPosts.find(
-      researchPost => researchPost.id === req.params.researchpost_id
+      (researchPost) => researchPost.id === req.params.researchpost_id
     );
 
     // Make sure research post exists
@@ -255,7 +234,7 @@ router.delete('/researchpost/:id/:researchpost_id', auth, async (req, res) => {
 
     // Get remove index
     const removeIndex = person.researchPosts
-      .map(researchPost => researchPost.id)
+      .map((researchPost) => researchPost.id)
       .indexOf(req.params.researchPost_id);
 
     person.researchPosts.splice(removeIndex, 1);
@@ -280,8 +259,8 @@ router.get('/propublica/:memberid', (req, res) => {
       ),
       method: 'GET',
       headers: {
-        'x-api-key': `${config.get('proPublicaToken')}`
-      }
+        'x-api-key': `${config.get('proPublicaToken')}`,
+      },
     };
 
     request(options, (error, response, body) => {

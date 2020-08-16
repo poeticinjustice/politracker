@@ -6,21 +6,21 @@ import { updatePerson, getPersonById } from '../../actions/person';
 
 const initialState = {
   personName: '',
-  party: '',
-  state: '',
-  website: '',
-  link1: '',
-  link2: '',
-  link3: '',
-  link4: '',
-  propubmemberid: ''
+  // party: '',
+  // state: '',
+  // website: '',
+  // link1: '',
+  // link2: '',
+  // link3: '',
+  // link4: '',
+  propubmemberid: '',
 };
 
 const EditPerson = ({
   person: { person, loading },
   updatePerson,
   getPersonById,
-  history
+  history,
 }) => {
   const [formData, setFormData] = useState(initialState);
 
@@ -37,14 +37,14 @@ const EditPerson = ({
 
   const {
     personName,
-    party,
-    state,
-    website,
-    link1,
-    link2,
-    link3,
-    link4,
-    propubmemberid
+    // party,
+    // state,
+    // website,
+    // link1,
+    // link2,
+    // link3,
+    // link4,
+    propubmemberid,
   } = formData;
 
   // propubmemberid = propubmemberid.substring(
@@ -52,10 +52,10 @@ const EditPerson = ({
   //   propubmemberid.indexOf('-')
   // );
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     updatePerson(person._id, formData, history, true);
   };
@@ -67,24 +67,24 @@ const EditPerson = ({
         <i className='fas fa-user' /> Make some updates
       </p>
       <small>* = required field</small>
-      <form className='form' onSubmit={e => onSubmit(e)}>
+      <form className='form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-group'>
           <input
             type='text'
             placeholder='Name of person'
             name='personName'
             value={personName}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
 
-        <div className='form-group'>
+        {/* <div className='form-group'>
           <input
             type='text'
             placeholder='Party'
             name='party'
             value={party}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
 
@@ -94,7 +94,7 @@ const EditPerson = ({
             placeholder='State'
             name='state'
             value={state}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
 
@@ -104,7 +104,7 @@ const EditPerson = ({
             placeholder='Website'
             name='website'
             value={website}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
 
@@ -114,7 +114,7 @@ const EditPerson = ({
             placeholder='Link'
             name='link1'
             value={link1}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
 
@@ -124,7 +124,7 @@ const EditPerson = ({
             placeholder='Link'
             name='link2'
             value={link2}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
 
@@ -134,7 +134,7 @@ const EditPerson = ({
             placeholder='Link'
             name='link3'
             value={link3}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
 
@@ -144,9 +144,9 @@ const EditPerson = ({
             placeholder='Link'
             name='link4'
             value={link4}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
-        </div>
+        </div> */}
 
         <div className='form-group'>
           <input
@@ -154,7 +154,7 @@ const EditPerson = ({
             placeholder='Paste Pro Publica link to autofill profile'
             name='propubmemberid'
             value={propubmemberid}
-            onChange={e => onChange(e)}
+            onChange={(e) => onChange(e)}
           />
         </div>
 
@@ -170,11 +170,11 @@ const EditPerson = ({
 EditPerson.propTypes = {
   updatePerson: PropTypes.func.isRequired,
   getPersonById: PropTypes.func.isRequired,
-  person: PropTypes.object.isRequired
+  person: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  person: state.person
+const mapStateToProps = (state) => ({
+  person: state.person,
 });
 
 export default connect(mapStateToProps, { updatePerson, getPersonById })(

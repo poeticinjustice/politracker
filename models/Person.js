@@ -4,75 +4,75 @@ const Schema = mongoose.Schema;
 const PersonSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'users',
   },
   name: {
-    type: String
+    type: String,
   },
   personName: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   party: {
-    type: String
+    type: String,
   },
   state: {
-    type: String
+    type: String,
   },
   website: {
-    type: String
+    type: String,
   },
   link1: {
-    type: String
+    type: String,
   },
   link2: {
-    type: String
+    type: String,
   },
   link3: {
-    type: String
+    type: String,
   },
   link4: {
-    type: String
+    type: String,
   },
   image: {
-    type: String
+    type: String,
   },
   propubmemberid: {
-    type: String
+    type: String,
   },
   researchPosts: [
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: 'users'
+        ref: 'users',
       },
       text: {
         type: String,
-        required: true
+        required: true,
       },
       name: {
-        type: String
+        type: String,
       },
       link: {
-        type: String
+        type: String,
       },
       note: {
-        type: String
+        type: String,
       },
       tags: {
-        type: [String]
+        type: [String],
       },
       date: {
         type: Date,
-        default: Date.now
-      }
-    }
+        default: Date.now,
+      },
+    },
   ],
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = Person = mongoose.model('person', PersonSchema);

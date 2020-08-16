@@ -1,29 +1,15 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { deletePerson } from '../../actions/person';
 
 const PersonItem = ({
-  auth,
-  deletePerson,
-  person: {
-    _id,
-    user,
-    personName,
-    party,
-    state,
-    website,
-    link1,
-    link2,
-    link3,
-    link4
-  }
+  person: { personName, party, state, website, link1, link2, link3, link4 },
 }) => {
   return (
     <Fragment>
       <div className='profile bg-light'>
         <img src='#!' alt='' className='round-img' />
         <div>
+          <p>Added by...</p>
           <p>{personName}</p>
           <p>{party}</p>
           <p>{state}</p>
@@ -45,17 +31,6 @@ const PersonItem = ({
             <a href={link4}>{link4}</a>
           </li>
         </ul>
-        {auth.isAuthenticated && !auth.loading && user === auth.user._id && (
-          <div>
-            <button
-              onClick={() => deletePerson(_id)}
-              type='button'
-              className='btn btn-danger'
-            >
-              <i className='fas fa-times' />
-            </button>
-          </div>
-        )}
       </div>
     </Fragment>
   );
@@ -63,12 +38,6 @@ const PersonItem = ({
 
 PersonItem.propTypes = {
   person: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
-  deletePerson: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-
-export default connect(mapStateToProps, { deletePerson })(PersonItem);
+export default PersonItem;
